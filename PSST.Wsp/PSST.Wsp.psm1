@@ -1,3 +1,15 @@
+<#
+.Synopsis
+   Unpacks SharePoint WSP files into folders.
+.EXAMPLE
+   Unpacks the template.wsp to the template folder.
+   Invoke-WspUnpackage -WspFile template.wsp -Destination .\template
+.OUTPUTS
+   None
+.FUNCTIONALITY
+   Uses Windows expand.exe to unpack WSP cabinet file.
+   Requires Windows SDK to be installed.
+#>
 Function Invoke-WspUnpackage {
   [CmdletBinding()]
   param(
@@ -15,6 +27,15 @@ Function Invoke-WspUnpackage {
   expand $WspFile.FullName -F:* $DiskDirectory.FullName;
 }
 
+<#
+.Synopsis
+   Removes named SharePoint features from unpacked WSP folder (ONet.xml file).
+.EXAMPLE
+   Removes the named features.
+   Remove-WspFeature -Directory .\template -FeatureDescritpion ShellControl,spouiremovalpublic
+.OUTPUTS
+   None
+#>
 Function Remove-WspFeature {
   [CmdletBinding()]
   param(
@@ -22,7 +43,7 @@ Function Remove-WspFeature {
     [System.IO.DirectoryInfo]$Directory,
 
     [Parameter(Mandatory=$true)]
-    [string[]]$featureDescription
+    [string[]]$FeatureDescription
   )
 
   $DiskDirectory = Get-Item $Directory;
@@ -31,11 +52,23 @@ Function Remove-WspFeature {
 
   $onetContent = (Get-Content -Path "$onetFileName") -join "`r`n";
 
-  $featureDescription | ForEach-Object { $onetContent = $onetContent -replace "[\s]*<!--$_.*-->[\s]*<Feature ID=.*", ""}
+  $FeatureDescription | ForEach-Object { $onetContent = $onetContent -replace "[\s]*<!--$_.*-->[\s]*<Feature ID=.*", ""}
 
   Set-Content -Path $onetFileName -Value $onetContent;
 }
 
+<#
+.Synopsis
+   Packs SharePoint unpacked WSP folder and files into a single WSP file.
+.EXAMPLE
+   Unpacks the template.wsp to the template folder.
+   Invoke-WspPackage -WspFileName template.wsp -Directory .\template
+.OUTPUTS
+   None
+.FUNCTIONALITY
+   Uses Windows makecab.exe to pack WSP cabinet file.
+   Requires Windows SDK to be installed.
+#>
 Function Invoke-WspPackage {
   [CmdletBinding()]
   param(
