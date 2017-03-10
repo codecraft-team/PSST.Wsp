@@ -48,7 +48,7 @@ Function Remove-WspFeature {
 
   $DiskDirectory = Get-Item $Directory;
 
-  $onetFileName = "$($DiskDirectory.FullName)\DACWebTemplate\DAC\ONet.xml";
+  $onetFileName = "$($DiskDirectory.FullName)\*WebTemplate\*\ONet.xml";
 
   $onetContent = (Get-Content -Path "$onetFileName") -join "`r`n";
 
