@@ -29,7 +29,7 @@
   notifications:
   - provider: Slack
     incoming_webhook:
-      secure: mYT9gxzFOIwAPjonfFWB104O1Ucb5e3jP4PJ8pfZatbEzUuVnAdBMI9qRnCHpOvw3a6EY1pjac3uC1QAV6d84t55OLxA99lx5qPX+GZvTPo=
+      secure: mYT9gxzFOIwAPjonfFWB104O1Ucb5e3jP4PJ8pfZatbEyIWAgH3mQLc7e//OdCWiM2rOHgUFYCy5BL2iYtqiSzd0/MCPWzJ1tb7zFR6Mqvw=
     template: >-
       <{{buildUrl}}|PSST.Wsp Release Build {{buildVersion}} {{status}}>
 
@@ -62,7 +62,7 @@
   notifications:
   - provider: Slack
     incoming_webhook:
-      secure: mYT9gxzFOIwAPjonfFWB104O1Ucb5e3jP4PJ8pfZatbEzUuVnAdBMI9qRnCHpOvw3a6EY1pjac3uC1QAV6d84t55OLxA99lx5qPX+GZvTPo=
+      secure: mYT9gxzFOIwAPjonfFWB104O1Ucb5e3jP4PJ8pfZatbEyIWAgH3mQLc7e//OdCWiM2rOHgUFYCy5BL2iYtqiSzd0/MCPWzJ1tb7zFR6Mqvw=
     template: >-
       <{{buildUrl}}|PSST.Wsp Feature/Hotfix Build {{buildVersion}} {{status}}>
 
