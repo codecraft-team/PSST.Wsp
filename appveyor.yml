@@ -1,0 +1,78 @@
+# Configuration for "master" branch.
+-
+  branches:
+    only:
+      - master
+  version: 1.0.{build}
+  pull_requests:
+    do_not_increment_build_number: false
+  clone_folder: c:\Projects\PSST.Wsp
+  environment:
+    AppVeyorAuthorizationToken: 
+      secure: tYbZpB5IIB1kZg3vnb1hYZyJUI27locxtQHA6I7wrC8=
+    PSGalleryApiKey:
+      secure: 3uEUNJ8M0/Rdg1D2KT+XLjpWNr7QbTMO/8SjSXuAwbbeGW1UIfwLthZ0nzFSEpRl
+  init:
+  - ps: >-
+      Install-PackageProvider -Name NuGet -MinimumVersion '2.8.5.201' -Force;
+      Import-PackageProvider NuGet -MinimumVersion '2.8.5.201';
+      Set-PSRepository -Name PSGallery -InstallationPolicy Trusted;
+      Install-Module -Name PSScriptAnalyzer;
+      Install-Module -Name PSDT.AppVeyor;
+  build_script:
+  - ps: >-
+      Invoke-PSDTPreBuild;
+  test: off
+  on_success:
+  - ps: >-
+      Invoke-PSDTPostBuild -Module PSST.Wsp;
+  notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: mYT9gxzFOIwAPjonfFWB104O1Ucb5e3jP4PJ8pfZatbEzUuVnAdBMI9qRnCHpOvw3a6EY1pjac3uC1QAV6d84t55OLxA99lx5qPX+GZvTPo=
+    template: >-
+      <{{buildUrl}}|PSST.Wsp Release Build {{buildVersion}} {{status}}>
+
+      Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: false
+
+# Configuration for all "feature-" branches.
+-
+  branches:
+    only:
+      - /feature-.*/
+      - /hotfix-.*/
+  version: 1.0.{build}
+  skip_tags: true
+  clone_folder: c:\Projects\PSST.Wsp
+  environment:
+    AppVeyorAuthorizationToken: 
+      secure: tYbZpB5IIB1kZg3vnb1hYZyJUI27locxtQHA6I7wrC8=
+    PSGalleryApiKey:
+      secure: 3uEUNJ8M0/Rdg1D2KT+XLjpWNr7QbTMO/8SjSXuAwbbeGW1UIfwLthZ0nzFSEpRl
+  init:
+  - ps: >-
+      Invoke-PSDTInitBuild;
+  build_script:
+  - ps: >-
+      Invoke-PSDTPreBuild;
+  test: off
+  notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: mYT9gxzFOIwAPjonfFWB104O1Ucb5e3jP4PJ8pfZatbEzUuVnAdBMI9qRnCHpOvw3a6EY1pjac3uC1QAV6d84t55OLxA99lx5qPX+GZvTPo=
+    template: >-
+      <{{buildUrl}}|PSST.Wsp Feature/Hotfix Build {{buildVersion}} {{status}}>
+
+      Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: false
+
+# "fall back" configuration for all other branches
+# no "branches" section defined
+# do not deploy at all
+-
+  configuration: Debug
