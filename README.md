@@ -1,6 +1,6 @@
 # PSST.Wsp
 
-[![Build status](https://ci.appveyor.com/api/projects/status/vceejvqua72cm8t0/branch/master?svg=true&passingText=Build%20Passing&failingText=Build%20Failing&pendingText=Build%20Pending)](https://ci.appveyor.com/project/TauriCode/PSST-Wsp)
+[![Build status](https://ci.appveyor.com/api/projects/status/gycbsu2kpu4it4up/branch/master?svg=true&passingText=Build%20Passing&failingText=Build%20Failing&pendingText=Build%20Pending)](https://ci.appveyor.com/project/codecraftteam/PSST-Wsp)
 
 PowerShell SharePoint Tools for working with WSP files.  
 
